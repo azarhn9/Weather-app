@@ -1,0 +1,203 @@
+body {
+  background-image: url("img/1.jpeg");
+  background-color: #cccccc; /* Used if the image is unavailable */
+  height: 500px; /* You must set a specified height */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.wait img {
+  height: 10%;
+  width: 10%;
+}
+.app-wrapper {
+  max-width: 930px;
+  font-family: "Comfortaa", cursive;
+  margin: 20px auto;
+}
+
+.weather-app {
+  border-radius: 40px;
+  padding: 0px 20px;
+  background: linear-gradient(
+    80deg,
+    rgb(134, 162, 189, 0.5) 31%,
+    rgb(91, 91, 97, 0.5) 60%
+  );
+}
+.searchBar {
+  margin: 1% 0px 1% 0px;
+}
+.form-control {
+  border: 3px solid #022a4b;
+  border-radius: 60px;
+  background: linear-gradient(130deg, #b3bcbe 0%, #4b4d4e 70%);
+  padding: 1%;
+}
+.searchIcons img {
+  border-radius: 50%;
+  height: 30px;
+}
+
+.searchButton {
+  border: 2px solid #022a4b;
+  background: linear-gradient(
+    80deg,
+    rgba(64, 66, 66, 0.9) 30%,
+    rgba(68, 111, 124, 0.9) 60%
+  );
+  border-radius: 50%;
+  padding: 10%;
+}
+
+.locationButton {
+  border: 2px solid #022a4b;
+  background: linear-gradient(
+    80deg,
+    rgba(64, 66, 66, 0.9) 30%,
+    rgba(68, 111, 124, 0.9) 60%
+  );
+  border-radius: 50%;
+  padding: 10%;
+}
+
+.currentWeather {
+  text-align: center;
+  color: #040c6b;
+  font-size: 80%;
+}
+
+.currentInfo {
+  font-weight: bold;
+  text-align: center;
+}
+
+.cityName {
+  color: #055b61;
+  font-size: 220%;
+  font-weight: bold;
+}
+
+span.time {
+  color: #040c6b;
+  font-size: 130%;
+}
+
+.weatherType {
+  text-align: center;
+  color: #040c6b;
+  font-size: 130%;
+}
+
+.humidity {
+  font-size: 130%;
+  color: #040c6b;
+}
+
+.windSpeed {
+  font-size: 130%;
+  color: #040c6b;
+}
+
+.todayWeather {
+  text-align: center;
+}
+.weather-icon img {
+  height: 40%;
+  width: 40%;
+}
+
+h4 {
+  color: #0ba8b3;
+  font-size: 27px;
+}
+
+.todayTemp {
+  display: inline;
+  color: #0ba8b3;
+  font-size: 130%;
+}
+
+.degreeUnits {
+  position: relative;
+  top: -10%;
+}
+
+.degreeUnits .active {
+  cursor: default;
+  text-decoration: none;
+}
+
+#fahrenheit {
+  color: #0b1042;
+  font-size: 130%;
+}
+
+span.divide {
+  color: #0b1042;
+  font-size: 130%;
+}
+
+#celsius {
+  color: #0b1042;
+  font-size: 130%;
+}
+
+h6 {
+  color: #0b1042;
+  font-size: 80%;
+  padding: 5px 0;
+}
+
+.lowTemp {
+  color: #0b1042;
+  font-size: 130%;
+}
+
+.forcasts {
+  font-size: 100%;
+}
+
+.forecast {
+  font-weight: bold;
+  margin: 10px 0px;
+  border-radius: 50%;
+  text-align: Center;
+  padding: 30px 0px;
+  background: linear-gradient(
+    80deg,
+    rgba(63, 78, 75, 0.8) 30%,
+    rgba(59, 110, 119, 0.8) 60%
+  );
+}
+
+.high {
+  font-style: initial;
+  color: #023e42;
+  padding: 7px;
+}
+
+.low {
+  color: #0ba8b3;
+  padding: 7px;
+}
+
+.sourceLine {
+  font-size: 18px;
+  text-align: center;
+  color: #040c6b;
+  margin: 0 50px;
+}
+
+.sourceCodeLink {
+  color: #040c6b;
+}
+.sourceCode {
+  text-align: center;
+}
+
+.icon {
+  font-size: 300%;
+  padding-top: 10px;
+}
