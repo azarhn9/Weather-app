@@ -103,9 +103,41 @@ span.time {
 .todayWeather {
   text-align: center;
 }
+
+@keyframes weatherIconAnimation {
+  0%,
+  100% {
+    transform: translateX(0%);
+    transform-origin: 50% 50%;
+  }
+
+  15% {
+    transform: translateX(-30px) rotate(-6deg);
+  }
+
+  30% {
+    transform: translateX(15px) rotate(6deg);
+  }
+
+  45% {
+    transform: translateX(-15px) rotate(-3.6deg);
+  }
+
+  60% {
+    transform: translateX(9px) rotate(2.4deg);
+  }
+
+  75% {
+    transform: translateX(-6px) rotate(-1.2deg);
+  }
+}
+
 .weather-icon img {
   height: 40%;
   width: 40%;
+
+  animation: weatherIconAnimation 4s ease-out 0s infinite normal none;
+  display: inline-block;
 }
 
 h4 {
@@ -198,6 +230,11 @@ h6 {
 }
 
 .icon {
+  font-size: 300%;
+  padding-top: 10px;
+  animation: weatherIconAnimation 10s ease-out 0s infinite normal none;
+}
+.S-icon {
   font-size: 300%;
   padding-top: 10px;
 }
