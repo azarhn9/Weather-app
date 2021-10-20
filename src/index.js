@@ -26,7 +26,7 @@ function formatDay(timestamp) {
         <span class="low">${Math.round(
           forecastDay.temp.min
         )}°
-      </div>
+      
       </div>`;
       }
     });
@@ -109,6 +109,14 @@ function getDate(timestamp) {
     let timeElement = document.querySelector("span.time");
     timeElement.innerHTML = getDate(cityTime);
   }
+
+  function getForecast(coordinates) {
+    let units = "metric";
+    let apiKey = "894a2e7aa7f46eeca5d8778f6faa5a5b";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&units=${units}&appid=${apiKey}`;
+    axios.get(apiUrl).then(showForecast);
+  }
+
   
   function search(city) {
     let apiKey = "894a2e7aa7f46eeca5d8778f6faa5a5b";
@@ -177,6 +185,3 @@ function getDate(timestamp) {
   fahrenheit.addEventListener("click", convertFahrenheit);
   
   search("Shiraz");
-
-
-  
