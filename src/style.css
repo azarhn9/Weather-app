@@ -187,11 +187,11 @@ h6 {
   font-size: 130%;
 }
 
-.forcasts {
+.weekAhead {
   font-size: 100%;
 }
 
-.forecast {
+.weekForecast {
   font-weight: bold;
   margin: 10px 0px;
   border-radius: 50%;
