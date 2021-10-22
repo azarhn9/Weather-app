@@ -82,8 +82,8 @@ function showWeekAheadForecast(response) {
     <div>
     <span class= "icon"> ${weekIcon} </span>
     </div>
-    <span class="high">${Math.round(forecast.temp.max)}°</span>
-    <span class="low">${Math.round(forecast.temp.min)}°</span>
+    <span class="high"><strong>${Math.round(forecast.temp.max)}°</strong></span>
+    <span class="low"><strong>${Math.round(forecast.temp.min)}°</strong></span>
     </div>
    `;
     }
