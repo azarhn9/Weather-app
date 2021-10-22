@@ -1,83 +1,107 @@
-function formatDay(timestamp) {
-    let date = new Date(timestamp * 1000);
-    let day = date.getDay();
-    let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-    return days[day];
-  }
-  
-  function showForecast(response) {
-    let dailyForecast = response.data.daily;
-    let forecast = document.querySelector("#forecast");
-    let forecastHTML = `<div class="row forcasts">`;
-    dailyForecast.forEach(function (forecastDay, index) {
-      if (index < 5) {
-        forecastHTML =
-          forecastHTML +
-          `<div class="col-2 forecast">
-      <div class="forecast-day">${formatDay(forecastDay.dt)}</div>
-      <br />
-      <div class="forecast-image">
-        <img src="https://openweathermap.org/img/wn/${
-          forecastDay.weather[0].icon
-        }@2x.png" width="80" />
-      </div>
-      <div class="high">
-        ${Math.round(forecastDay.temp.max)}°
-        <span class="low">${Math.round(
-          forecastDay.temp.min
-        )}°
-      
-      </div>`;
+function findDate(timestamp){
+let now = new Date(timestamp);
+let days = [
+  "Sun",
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat",
+];
+let months = [
+    "Jan.",
+    "Feb.",
+    "Mar.",
+    "Apr.",
+    "May.",
+    "Jun.",
+    "Jul.",
+    "Aug.",
+    "Sep.",
+    "Oct.",
+    "Nov.",
+    "Dec"
+]
+let month = months[now.getMonth()];
+let day = days[now.getDay()];
+let hours = now.getHours();
+let date = now.getDate();
+let minutes = (`0` + now.getMinutes()).slice(-2);
+
+return `${day}, ${month} ${date}, ${hours}:${minutes}`;
+}
+
+function formatDayForecast(timestamp){
+  let date = new Date(timestamp*1000);
+  let localTime = date.getTime();
+  let localOffset = date.getTimezoneOffset() * 60000;
+  let utc = localTime + localOffset;
+  let local = utc + 1000 * timezone;
+  let newTime = new Date(local);
+  let days = [  
+    "Sun",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat"
+  ]
+  let day = newTime.getDay();
+  return days [day];
+}
+
+function showWeekAheadForecast(response) {
+ let forecast = response.data.daily;
+ timezone = response.data.timezone_offset;
+ let weekAheadForecast = document.querySelector("#weekAhead-Forecast");
+ 
+ let weekAheadForecastHTML = `<div class=" row weekAhead">`;
+  forecast.forEach(function (forecast, index){  
+
+    if (index!==0 & index < 7) { 
+    if (forecast.weather[0].main === "Clear") {
+        weekIcon = "🌞";
+      } else if (forecast.weather[0].main === "Clouds") {
+        weekIcon = "☁️";
+      } else if (forecast.weather[0].main === "Rain") {
+        weekIcon = "🌧";
+      } else if (forecast.weather[0].main === "Fog") {
+        weekIcon = "🌬";
+      } else if (forecast.weather[0].main === "Snow") {
+        weekIcon = "🌨";
+      } else if (forecast.weather[0].main === "Drizzle") {
+        weekIcon = "☔️";
       }
-    });
-    forecastHTML = forecastHTML + `</div>`;
-    forecast.innerHTML = forecastHTML;
-  }
-  
-  function getForecast(coordinates) {
-    let units = "metric";
-    let apiKey = "159ab5e75e6ed3b8cb370b2d499a9313";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&units=${units}&appid=${apiKey}`;
-    axios.get(apiUrl).then(showForecast);
-  }
-  
 
+  weekAheadForecastHTML = weekAheadForecastHTML + ` 
+   <div class="col-2 weekForecast">
+    ${formatDayForecast(forecast.dt)} 
+    <br />
+    <div>
+    <span class= "icon"> ${weekIcon} </span>
+    </div>
+    <span class="high">${Math.round(forecast.temp.max)}°</span>
+    <span class="low">${Math.round(forecast.temp.min)}°</span>
+    </div>
+   `;
+    }
+  });
+   
+ weekAheadForecastHTML = weekAheadForecastHTML + `</div>`;
+ weekAheadForecast.innerHTML = weekAheadForecastHTML;
+}
 
-function getDate(timestamp) {
-    let now = new Date(timestamp);
-    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    let months = [
-      "Jan.",
-      "Feb.",
-      "Mar.",
-      "Apr.",
-      "May.",
-      "Jun.",
-      "Jul.",
-      "Aug.",
-      "Sep.",
-      "Oct.",
-      "Nov.",
-      "Dec",
-    ];
-    let month = months[now.getMonth()];
-    let day = days[now.getDay()];
-    let hours = now.getHours();
-    let date = now.getDate();
-    let minutes = (`0` + now.getMinutes()).slice(-2);
+function getForecast(coordinates) {
+  let apiKey = "894a2e7aa7f46eeca5d8778f6faa5a5b";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&exclude={minutely,hourly,alerts}&appid=${apiKey}&units=imperial`;
   
-    let currentTime = document.querySelector("span.time");
-    return `${day}, ${month} ${date}, ${hours}:${minutes}`;
-  }
-  function getForecast(coordinates) {
-    let units = "metric";
-    let apiKey = "894a2e7aa7f46eeca5d8778f6faa5a5b";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&units=${units}&appid=${apiKey}`;
-    axios.get(apiUrl).then(showForecast);
-  }
-  
-  function getTemp(response) {
-    let citySearch = response.data.name;
+  axios.get(apiUrl).then(showWeekAheadForecast);
+}
+
+function getTemp(response) {
+ let citySearch = response.data.name;
     let cityName = document.querySelector(".cityName");
     cityName.innerHTML = `${citySearch}`;
     let weather = response.data.weather[0].main;
@@ -98,60 +122,57 @@ function getDate(timestamp) {
     let mainIcon = response.data.weather[0].icon;
     let todayIcon = document.querySelector(".mainIcon");
     todayIcon.innerHTML = `<img src = "https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png"/>`; 
-  
-    let now = new Date();
-    let localTime = now.getTime();
-    let localOffset = now.getTimezoneOffset() * 60000;
-    let utc = localTime + localOffset;
-    let local = utc + 1000 * response.data.timezone;
-    let cityTime = new Date(local);
-  
-    let timeElement = document.querySelector("span.time");
-    timeElement.innerHTML = getDate(cityTime);
-  }
 
-  function getForecast(coordinates) {
-    let units = "metric";
-    let apiKey = "894a2e7aa7f46eeca5d8778f6faa5a5b";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&units=${units}&appid=${apiKey}`;
-    axios.get(apiUrl).then(showForecast);
-  }
+  let now = new Date();
+  let localTime = now.getTime();
+  let localOffset = now.getTimezoneOffset() * 60000;
+  let utc = localTime + localOffset;
+  let local = utc + 1000 * response.data.timezone;
+  let cityTime = new Date(local);
 
+  let time = document.querySelector("span.time");
+  time.innerHTML = findDate(cityTime);
   
-  function search(city) {
-    let apiKey = "894a2e7aa7f46eeca5d8778f6faa5a5b";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
-  
-    axios.get(apiUrl).then(getTemp);
-  }
-  
-  function enterCity(event) {
-    event.preventDefault();
-    let input = document.querySelector("#city-search");
-    let city = input.value;
-  
-    search(city);
-  }
-  
-  let typeCity = document.querySelector("#search-form");
-  typeCity.addEventListener("submit", enterCity);
-  
-  function findLocation(position) {
-    let lat = position.coords.latitude;
-    let lon = position.coords.longitude;
-    let apiKey = "894a2e7aa7f46eeca5d8778f6faa5a5b";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
-  
-    axios.get(apiUrl).then(getTemp);
-  }
-  function getCurrentLocation() {
-    navigator.geolocation.getCurrentPosition(findLocation);
-  }
-  
-  let button = document.querySelector(".locationButton");
-  button.addEventListener("click", getCurrentLocation);
-  
-  function convertCelsius(event) {
+  getForecast(response.data.coord);
+}
+
+
+function search(city) {
+  let apiKey = "894a2e7aa7f46eeca5d8778f6faa5a5b";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
+
+  axios.get(apiUrl).then(getTemp);
+}
+
+function enterCity(event) {
+  event.preventDefault();
+  let input = document.querySelector("#city-search");
+  let city = input.value;
+
+  search(city);
+}
+
+let typeCity = document.querySelector("#search-form");
+typeCity.addEventListener("submit", enterCity);
+
+function findLocation(position) {
+  let lat = position.coords.latitude;
+  let lon = position.coords.longitude;
+  let apiKey = "894a2e7aa7f46eeca5d8778f6faa5a5b";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
+
+  axios.get(apiUrl).then(getTemp);
+}
+function getCurrentLocation() {
+  navigator.geolocation.getCurrentPosition(findLocation);
+}
+
+let button = document.querySelector(".locationButton");
+button.addEventListener("click", getCurrentLocation);
+
+let timezone = null;
+
+function convertCelsius(event) {
     event.preventDefault();
     celsius.classList.add("active");
     fahrenheit.classList.remove("active");
@@ -183,5 +204,10 @@ function getDate(timestamp) {
   
   let fahrenheit = document.querySelector("#fahrenheit");
   fahrenheit.addEventListener("click", convertFahrenheit);
-  
-  search("Shiraz");
+
+
+search("Shiraz");
+
+
+
+
